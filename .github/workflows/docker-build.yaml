@@ -22,7 +22,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -30,12 +30,12 @@ jobs:
 
     - name: Build, tag, and push patient-service image
       run: |
-        docker build -t $ECR_REPOSITORY_PATIENT:latest -f apps/Dockerfile-appoint ./apps
-        docker tag $ECR_REPOSITORY_PATIENT:latest 250740063249.dkr.ecr.eu-north-1.amazonaws.com/$ECR_REPOSITORY_PATIENT:latest
-        docker push 250740063249.dkr.ecr.eu-north-1.amazonaws.com/$ECR_REPOSITORY_PATIENT:latest
+        docker build -t $ECR_REPOSITORY_PATIENT:latest -f services/patient-service/Dockerfile services/patient-service
+        docker tag $ECR_REPOSITORY_PATIENT:latest 250740063249.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/$ECR_REPOSITORY_PATIENT:latest
+        docker push 250740063249.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/$ECR_REPOSITORY_PATIENT:latest
 
     - name: Build, tag, and push appointment-service image
       run: |
-        docker build -t $ECR_REPOSITORY_APPOINTMENT:latest -f apps/Dockerfile-patient ./apps
-        docker tag $ECR_REPOSITORY_APPOINTMENT:latest 250740063249.dkr.ecr.eu-north-1.amazonaws.com/$ECR_REPOSITORY_APPOINTMENT:latest
-        docker push 250740063249.dkr.ecr.eu-north-1.amazonaws.com/$ECR_REPOSITORY_APPOINTMENT:latest
+        docker build -t $ECR_REPOSITORY_APPOINTMENT:latest -f services/appointment-service/Dockerfile services/appointment-service
+        docker tag $ECR_REPOSITORY_APPOINTMENT:latest 250740063249.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/$ECR_REPOSITORY_APPOINTMENT:latest
+        docker push 250740063249.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/$ECR_REPOSITORY_APPOINTMENT:latest
