@@ -24,15 +24,15 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
-      working-directory: infra
+      working-directory: ./modules
 
     - name: Terraform Plan
       run: terraform plan -out=tfplan
-      working-directory: infra
+      working-directory: ./modules
 
     - name: Terraform Apply
       run: terraform apply -auto-approve tfplan
-      working-directory: infra
+      working-directory: ./modules
 
   build-and-push:
     name: Build and Push Docker Images
