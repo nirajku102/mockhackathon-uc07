@@ -5,7 +5,7 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 locals {
-  cluster_name = "my-eks-cluster"
+  cluster_name = "my-kubernetes-cluster"
 }
 
 resource "random_string" "suffix" {
