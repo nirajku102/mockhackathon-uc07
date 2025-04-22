@@ -1,8 +1,8 @@
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "20.8.4"
-  cluster_name    = "fargate-eks-cluster"
-  cluster_version = var.kubernetes_version
+  cluster_name    = "eks-cluster-usecase"
+  cluster_version = "1.32"
   subnet_ids      = var.subnet_ids  # Pass as variable
   vpc_id          = var.vpc_id      # Pass as variable
 
